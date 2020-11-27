@@ -24,29 +24,29 @@ const personSchema = new mongoose.Schema({
 const Person = mongoose.model('Person', personSchema)
 
 const addPerson = ( name, number ) => {
-    const person = new Person({ name, number })
-    person.save().then(response => {
-        console.log(`added ${name} number ${number} to phonebook`)
-        mongoose.connection.close()
-    })
+  const person = new Person({ name, number })
+  person.save().then(() => {
+    console.log(`added ${name} number ${number} to phonebook`)
+    mongoose.connection.close()
+  })
 }
 
 const listPersons = () => {
-    Person.find({})
+  Person.find({})
     .then(persons => {
-        console.log('Phonebook:')
-        persons.forEach(person => {
-            console.log(`${person.name} ${person.number}`)
-        })
-        mongoose.connection.close()
+      console.log('Phonebook:')
+      persons.forEach(person => {
+        console.log(`${person.name} ${person.number}`)
+      })
+      mongoose.connection.close()
     })
 }
 
 if (process.argv.length === 3) {
-    listPersons()
+  listPersons()
 } else if (process.argv.length === 5) {
-    addPerson(name, number)
+  addPerson(name, number)
 } else {
-    console.log('invalid amount of parameters \npassword only shows phonebook listed \npassword + name and number adds person')
-    process.exit(1)
+  console.log('invalid amount of parameters \npassword only shows phonebook listed \npassword + name and number adds person')
+  process.exit(1)
 }
